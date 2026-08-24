@@ -5,12 +5,15 @@
     "basePortal": "appul4ZPEgDmU1uPs"
   },
   "firebase": {
-    "projectId": "tisuk-web",
-    "storageBucket": "gs://tisuk-web.appspot.com",
-    "clientId": "100206450854034654086",
-    "clientEmail": "firebase-adminsdk-h0rje@tisuk-web.iam.gserviceaccount.com",
-    "publicApiKey": "AIzaSyCwsHOHwoK541wJEv1xmTV2LKtskcl2ZhQ",
-    "functionsApiUrl": "https://us-central1-tisuk-web.cloudfunctions.net/api"
+    "projectId": "tisc-functions",
+    "authDomain": "tisc-functions.firebaseapp.com",
+    "storageBucket": "gs://tisc-functions.firebasestorage.app",
+    "messagingSenderId": "765640180911",
+    "appId": "1:765640180911:web:8989570a6003169b48005a",
+    "clientId": "TODO_SET_AFTER_SERVICE_ACCOUNT_KEY_GENERATED",
+    "clientEmail": "TODO_SET_AFTER_SERVICE_ACCOUNT_KEY_GENERATED",
+    "publicApiKey": "AIzaSyClLGr65JrwyfS5hu1c_YWC53cmLdrieFc",
+    "functionsApiUrl": "https://us-central1-tisc-functions.cloudfunctions.net/api"
   },
   "site": {
     "origin": "https://portal.traumainformedschools.co.uk"

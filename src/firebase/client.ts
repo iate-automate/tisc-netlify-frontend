@@ -6,11 +6,11 @@ import { settings } from '@/config/settings.js';
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: settings.firebase.publicApiKey,
-  authDomain: "tisuk-web.firebaseapp.com",
-  projectId: "tisuk-web",
-  storageBucket: "tisuk-web.appspot.com",
-  messagingSenderId: "288036585166",
-  appId: "1:288036585166:web:86ac9afdedc5d8fdfc1a9f"
+  authDomain: settings.firebase.authDomain,
+  projectId: settings.firebase.projectId,
+  storageBucket: settings.firebase.storageBucket.replace(/^gs:\/\//, ''),
+  messagingSenderId: settings.firebase.messagingSenderId,
+  appId: settings.firebase.appId
 };
 
 // Initialize Firebase
