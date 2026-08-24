@@ -1,0 +1,59 @@
+---
+import { settings } from '@/config/settings.js'
+import Header from './Header.astro'
+import Footer from './Footer.astro'
+import { SEOMetadata } from 'astro-seo-metadata'
+import { getAuthData } from '@/functions/server/firebase/ssr'
+import '@/styles/global.css'
+
+const { title } = Astro.props
+const authData = await getAuthData(Astro.request)
+---
+
+<html lang="en">
+
+  <head>
+    <SEOMetadata
+      siteName={'Trauma Informed Schools UK'}
+      title={title + ' — Trauma Informed Schools UK'}
+      description={'TISUK aims to deliver high quality training which enables practitioners to create safe, supportive environments in schools, communities, and other organisations, with a focus on helping all children and especially the more vulnerable ones.'}
+      image={settings.site.origin + '/images/tis-wales-teacher-and-child.jpg'}
+      favicon={'/favicon.ico'}
+      author="Trauma Informed Schools UK"
+      copyright="Trauma Informed Schools UK"
+      astroSitemap={true}
+      canonicalUrl={Astro.url.toString()}
+      type={'website'}
+      astroGenerator={true}
+    />
+		
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Gabarito:wght@400..900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/3fb78b908e.js" crossorigin="anonymous"></script>
+
+    <meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+
+  <body>
+   <Header isAuthenticated={authData.isAuthenticated} />
+    <main>
+      <slot />
+    </main>
+   <Footer />
+  </body>
+
+  <script>
+    import { initSessionManager } from '@/functions/client/sessionManager';
+    
+    // Initialize session management when the page loads
+    initSessionManager();
+  </script>
+
+</html>

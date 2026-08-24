@@ -1,0 +1,18 @@
+/* Page Header Styles */
+
+.page-header {
+    display: grid;
+    gap: var(--margin-x-small);
+}
+
+.page-header h1 {
+    margin-bottom: 0;
+    max-width:  25ch;
+    text-wrap: balance;
+}
+
+.page-header p {
+    margin: var(--margin-small) 0 0;
+    max-width: var(--line-width);
+    text-wrap: balance;
+}

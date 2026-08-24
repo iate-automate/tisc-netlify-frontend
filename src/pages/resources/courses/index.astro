@@ -1,0 +1,26 @@
+---
+import Master from '@/layouts/Master.astro'
+import PageHeader from '@/components/Elements/PageHeader/PageHeader.astro'
+import Loader from '@/components/Elements/Loader/Loader.astro'
+import CoursesList from '@/components/Resources/Courses/CoursesList.astro'
+import { fetchApplicationsByRecordIds } from '@/functions/server/airtable/applications'
+import { getAuthData } from '@/functions/server/firebase/ssr'
+
+const authData = await getAuthData(Astro.request)
+const applicationIds = authData.userData?.applications ?? []
+const applications = await fetchApplicationsByRecordIds(applicationIds)
+---
+
+<Master title="My Courses">
+  <section>
+    <PageHeader
+      title="My Courses"
+      copy="Browse the training courses you are confirmed to attend and access their resources."
+    />
+
+    <CoursesList applications={applications} server:defer>
+      <Loader slot="fallback" label="Loading your courses..." />
+    </CoursesList>
+  </section>
+</Master>
+

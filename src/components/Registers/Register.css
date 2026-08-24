@@ -1,0 +1,80 @@
+@import '@/components/Forms/Forms.css';
+
+/* Attendance Register Styles */
+
+.register {
+    display: grid;
+    gap: var(--margin-large);
+    max-width: var(--block-width);
+}
+
+.register input {
+    width: auto;
+}
+
+.register__entries {
+    display: grid;
+    gap: var(--margin-small);
+}
+
+.register__delegates {
+    display: grid;
+    gap: var(--margin-small);
+    margin-bottom: var(--margin-medium);
+}
+
+.register__delegate {
+    display: grid;
+    gap: var(--margin-x-small);
+    grid-template-columns: repeat(2, 1fr);
+    padding-bottom: var(--margin-small);
+    border-bottom: var(--keyline) solid var(--color-knockout);
+    align-items: center;
+}
+
+.register__delegate h3 {
+    margin: 0;
+}
+
+.register__delegate select {
+    /* width: 100%; */
+    justify-self: end;
+}
+
+.register__notes textarea {
+    width: 100%;
+    padding: var(--margin-small);
+    border: 1px solid var(--color-fg);
+    border-radius: var(--radius);
+    font-size: 1rem;
+}
+
+/* Register Flags */
+
+.X {
+    opacity: 0.5;
+}
+
+.register .checkboxes {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--margin-x-small) var(--margin-medium);
+    margin: var(--margin-small) auto;
+}
+
+@media only screen and (min-width: 600px) {
+    .register .checkboxes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.register .checkboxes label {
+    font-weight: normal;
+}
+
+/* Register Feedback */
+
+.btn-register-feedback {
+    color: var(--color-links);
+    font-size: 1.2rem;
+}

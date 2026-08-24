@@ -1,0 +1,34 @@
+---
+import { fetchSystems } from "@/functions/server/airtable/arte"
+import type { AirtableSystem } from '@/types/index.js';
+
+const { purpose } = Astro.props
+const systems = await fetchSystems(purpose["Systems"])
+
+---
+
+<div class="card">
+    <p>{purpose["Name"]}</p>
+    <div class="systems">
+        {systems.map((system: AirtableSystem) => (
+            <a class="tag" href={`/resources/arte/systems/${system["Record ID"]}`}>{system["Name"]}</a>
+        ))}
+    </div>
+</div>
+ 
+
+<style>
+
+    .systems {
+        display: flex;
+        gap: var(--margin-small);
+    }
+
+    .tag:hover {
+        opacity: 1;
+        color: var(--color-links);
+        border-color: var(--color-links);
+    }
+
+</style>
+

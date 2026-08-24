@@ -1,0 +1,128 @@
+---
+import Master from '@/layouts/Master.astro'
+import { fetchResource, fetchApplication } from '@/functions/server/airtable/courses'
+import { richTextToHtml, prettyDate } from '@/functions/server/utils'
+import Loader from '@/components/Elements/Loader/Loader.astro'
+import ContractConfirmation from '@/components/Contracts/ContractConfirmation'
+
+const { id } = Astro.params
+const { searchParams } = Astro.url
+const contractId = searchParams.get('contractId')
+const [application, resource] = await Promise.all([
+    fetchApplication(id || ''),
+    fetchResource(contractId || '')
+])
+
+const now = new Date().toISOString()
+const contractSigned = Boolean(application?.["Contract Signed"])
+const signatureDate = prettyDate(application?.["Contract Signed Date"] || now) 
+
+---
+
+<Master title={resource["Name"]}>
+	<section class="page">
+        <h1>{resource["Name"]}</h1>
+        <div class="delegate-details">
+            <div class="delegate-detail">
+                <div class="delegate-detail__label">Name</div>
+                <div class="delegate-detail__value">{application["Full Name"]}</div>
+            </div>
+            <div class="delegate-detail">
+                <div class="delegate-detail__label">Email</div>
+                <div class="delegate-detail__value">{application["Email"]}</div>
+            </div>
+            <div class="delegate-detail">
+                <div class="delegate-detail__label">Phone</div>
+                <div class="delegate-detail__value">{application["Phone"]}</div>
+            </div>
+            <div class="delegate-detail">
+                <div class="delegate-detail__label">Address</div>
+                <div class="delegate-detail__value">{application["Address"]}</div>
+            </div>
+        </div>
+        <div class="contract" set:html={richTextToHtml(resource["Content"])} />
+        <div class="contract-signature">
+            <div>Signed</div>
+            <div class="signature">{application["Full Name"]}</div>
+            <div class="small-print">{signatureDate}</div>
+        </div>
+        <div class="contract__actions">
+            <ContractConfirmation
+                client:load
+                applicationRecordId={id || ''}
+                initialSigned={contractSigned}
+            />
+        </div>
+	</section>
+</Master>
+
+<style>
+
+    section {
+        display: grid;
+        gap: var(--margin-medium);
+        border: var(--border) var(--color-ui-medium);
+        border-radius: var(--radius);
+        padding: var(--margin-medium);
+        margin-inline: auto;
+    }
+
+    @media only screen and (min-width: 768px) {
+        section {
+            padding: var(--margin-large);
+        }
+    }
+
+    .delegate-details {
+        padding-bottom: var(--margin-medium);
+        border-bottom: var(--keyline) solid var(--color-knockout);
+    }
+
+    .delegate-detail {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: var(--margin-small);
+    }
+
+    .delegate-detail__label {
+        font-weight: 700;
+    }
+
+    .contract {
+        max-width: var(--block-width);
+        padding-bottom: var(--margin-medium);
+        border-bottom: var(--keyline) solid var(--color-knockout);
+    }
+
+    h3 {
+        margin-top: var(--margin-medium);
+    }
+
+    .contract-signature {
+        display: grid;
+        gap: var(--margin-small);
+        padding-bottom: var(--margin-medium);
+        border-bottom: var(--keyline) solid var(--color-knockout);
+    }
+
+    .contract__actions {
+        margin-top: var(--margin-medium);
+    }
+
+    @media print {
+
+        section {
+            border: none;
+            padding: 0;
+        }
+
+        .contract {
+            max-width: 100%;
+        }
+
+        .contract__actions {
+            display: none;
+        }
+    }
+
+</style>

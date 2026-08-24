@@ -1,0 +1,62 @@
+---
+import settings from '@/settings'
+
+const { isAuthenticated = false } = Astro.props
+const navItems = settings.nav.filter((item) => !item.protected || isAuthenticated)
+---
+
+<header>
+    <div class="logo">
+        <a href="/">
+            <img src="/images/tisuk-logo.png" alt="TIS UK Logo">
+        </a>
+    </div>
+    <nav>
+        {navItems.map((item) => (
+            <a class="nav-link" href={item.url}>{item.title}</a>
+        ))}
+    </nav>
+</header>
+
+<style>
+
+    header {
+        display: grid;
+        grid-template-columns: max-content auto;
+        gap: var(--margin-large);
+    }
+
+    nav {
+        display: grid;
+        justify-items: end;
+        margin-bottom: auto;
+    }
+
+    nav a {
+        font-weight: bold;
+        font-size: var(--font-size-increased);
+    }
+
+    @media only screen and (min-width: 768px) {
+        nav a {
+            font-size: 1.2rem;
+        }
+    }
+
+    .logo {
+        width: 120px;
+    }
+
+    @media only screen and (min-width: 768px) {
+        .logo {
+            width: 150px;
+        }
+    }
+
+    @media print {
+        nav {
+            display: none;
+        }
+    }
+
+</style>

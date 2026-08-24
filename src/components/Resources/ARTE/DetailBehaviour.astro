@@ -1,0 +1,51 @@
+---
+import CardPurpose from '@/components/Resources/ARTE/CardPurpose.astro'
+import CardProvision from '@/components/Resources/ARTE/CardProvision.astro'
+import CardBehaviour from '@/components/Resources/ARTE/CardBehaviour.astro'
+import type { ArtePurpose, ArteProvision, ArteBehaviour } from '@/types/index.ts'
+
+const { purposes, provisions, relatedBehaviours } = Astro.props as {
+    purposes: ArtePurpose[]
+    provisions: ArteProvision[]
+    relatedBehaviours: ArteBehaviour[]
+}
+---
+
+ <!-- Purpose -->
+ <div class="block__resources">
+    <div class="subheader__resources">
+        <h2>Purpose</h2>
+        <p>What purpose does this behaviour serve?</p>
+    </div>
+    <div class="cards">
+        {purposes.map(purpose => (
+            <CardPurpose purpose={purpose} />
+        ))}
+    </div>
+</div>
+
+<!-- Provisions -->
+<div class="block__resources">
+    <div class="subheader__resources">
+        <h2>Provision</h2>
+        <p>What provisions are recommended to support this behaviour?</p>
+    </div>
+    <div class="cards">
+        {provisions.map(provision => (
+            <CardProvision provision={provision} />
+        ))}
+    </div>
+</div>
+
+<!-- Related Behaviours -->
+<div class="block__resources">
+    <div class="subheader__resources">
+        <h2>Related Behaviours</h2>
+        <p>Behaviours that can also be linked to the purposes above.</p>
+    </div>
+    <div class="cards">
+        {relatedBehaviours.map(relatedBehaviour => (
+            <CardBehaviour behaviour={relatedBehaviour} />
+        ))}
+    </div>
+</div>

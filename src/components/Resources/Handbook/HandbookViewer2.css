@@ -1,0 +1,205 @@
+/* HandbookViewer2 - Clean PDF-like interface using Yet Another React Lightbox */
+
+.handbook-viewer2 {
+  width: 100%;
+  margin: 0 auto;
+  background: #f5f5f5;
+  border: var(--border) var(--color-ui-medium);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  padding: 0;
+}
+
+@media only screen and (min-width: 768px) {
+  .handbook-viewer2 {
+    padding: var(--margin-small);
+  }
+}
+
+.handbook-container {
+  position: relative;
+  background: white;
+  border: var(--border) #e0e0e0;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+/* Custom controls bar (like PDF toolbar) */
+.handbook-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--margin-small);
+  background: var(--color-ui-light);
+  color: var(--color-fg);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: var(--font-size-decreased);
+  border-bottom: var(--border) #ddd;
+  gap: var(--margin-small);
+}
+
+@media only screen and (min-width: 768px) {
+  .handbook-controls {
+    padding: var(--margin-small) var(--margin-medium);
+  }
+}
+
+.page-info {
+  display: flex;
+  align-items: center;
+  color: var(--color-fg);
+}
+
+.page-separator {
+  color: var(--color-ui-medium);
+  margin: 0 8px;
+}
+
+.view-controls:hover {
+    color: var(--color-links);
+    cursor: pointer;
+}
+
+/* Main content area */
+
+.handbook-content {
+  display: flex;
+  flex-direction: column;
+  /* min-height: 800px; */
+}
+
+.handbook-main-view {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--margin-small);
+  background: #e8e8e8;
+}
+
+@media only screen and (min-width: 768px) {
+  .handbook-main-view {
+    padding: var(--margin-medium) var(--margin-small);
+  }
+}
+
+.handbook-page-image {
+  max-width: 100%;
+  max-height: 800px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  background: white;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+}
+
+.handbook-page-image:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Thumbnail navigation */
+
+.handbook-thumbnails {
+  background: #f0f0f0;
+  border-top: var(--border) #ddd;
+  padding: var(--margin-small);
+  overflow-y: auto;
+  
+}
+
+.thumbnail-container {
+  display: flex;
+  gap: var(--margin-small);
+  overflow-x: auto;
+  padding: 0;
+  scrollbar-gutter: stable;
+  will-change: transform;
+  scrollbar-width: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .thumbnail-container {
+    padding: var(--margin-small) 0 var(--margin-medium);
+    scrollbar-width: auto;
+  }
+}
+
+.thumbnail {
+  position: relative;
+  flex-shrink: 0;
+  width: 60px;
+  height: 80px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.thumbnail:hover {
+  border-color: var(--color-ui-medium);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.thumbnail.active {
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(0, 122, 204, 0.3);
+}
+
+.thumbnail-image {
+  width: 100%;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+.thumbnail-number {
+  font-size: 10px;
+  color: var(--color-text-light);
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.thumbnail.active .thumbnail-number {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Footer removed */
+
+/* Error state */
+.handbook-error {
+  padding: 40px 20px;
+  text-align: center;
+  background: #fff;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.handbook-error p {
+  color: var(--color-error);
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Yet-Another-React-Lightbox overrides */
+
+.yarl__slide_image {
+  background: white;
+}
+
+.yarl__flex_center .yarl__thumbnails_thumbnail {
+    width: initial;
+}

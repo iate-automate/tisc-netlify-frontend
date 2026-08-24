@@ -1,0 +1,15 @@
+---
+import Master from '@/layouts/Master.astro'
+import PageHeader from '@/components/Elements/PageHeader/PageHeader.astro'
+import HandbookViewer2 from '@/components/Resources/Handbook/HandbookViewer2'
+---
+
+<Master title="Delegate Handbook (Enhanced)">
+	<section>
+		<PageHeader
+		title="Delegate Handbook"
+		copy="The TISUK delegate handbook is a comprehensive guide to the materials covered in the TISUK training."
+	/>
+		<HandbookViewer2 client:only="react" />
+	</section>
+</Master>

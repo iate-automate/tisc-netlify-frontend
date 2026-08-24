@@ -1,0 +1,30 @@
+---
+const { label, name, ...rest } = Astro.props
+const randomID = Math.random().toString(36).substring(7)
+---
+
+<div class="input">
+    <label for={`input-${randomID}`}>{label}</label>
+    <input type="text"
+        name={name}
+        id={`input-${randomID}`}
+        {...rest}
+    />
+</div>
+
+<style>
+    .input {
+        display: grid;
+        gap: var(--margin-xx-small);
+    }
+    label {
+        font-size: .9rem;
+    }
+    input {
+        width: 100%;
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.25rem;
+    }
+</style>

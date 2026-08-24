@@ -1,0 +1,15 @@
+---
+import Master from '@/layouts/Master.astro'
+import FormForgot from '@/components/Forms/FormForgot'
+import PageHeader from '@/components/Elements/PageHeader/PageHeader.astro';
+---
+
+<Master title="Reset Password">
+  <section>
+    <PageHeader 
+      title="Reset Password" 
+      copy="Enter your email address and we'll send you a link to reset your password." 
+    />
+    <FormForgot client:only="react" />
+  </section>
+</Master>

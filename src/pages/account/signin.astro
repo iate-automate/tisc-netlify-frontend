@@ -1,0 +1,34 @@
+---
+import Master from '@/layouts/Master.astro'
+import FormLogin from '@/components/Forms/FormLogin'
+import PageHeader from '@/components/Elements/PageHeader/PageHeader.astro';
+import { getAuthData } from '@/functions/server/firebase/ssr';
+
+// Get authentication data
+const authData = await getAuthData(Astro.request);
+
+// Get redirect parameter
+const url = new URL(Astro.request.url);
+const redirectPath = url.searchParams.get('redirect');
+
+// Redirect if already authenticated
+if (authData.isAuthenticated) {
+  const redirectTo = redirectPath || '/account/profile';
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: redirectTo
+    }
+  });
+}
+---
+
+<Master title="Login">
+  <section>
+    <PageHeader 
+      title="Login" 
+      copy={redirectPath ? `You need to be logged in to access this resource.` : "Please sign in below to access your resources."}
+    />
+    <FormLogin client:only="react" />
+  </section>
+</Master>

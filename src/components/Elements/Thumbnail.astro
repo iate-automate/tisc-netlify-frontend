@@ -1,0 +1,44 @@
+---
+const { title, description, img, link, target} = Astro.props
+
+---
+
+<a class="thumbnail" href={link} target={target ? target : "_self"}>
+    {img && <img src={img} alt={`${title} System Thumbnail`} width="250" height="250"/>}
+    <h3>{title}</h3>
+    {description && <p>{description}</p>}
+    <slot />
+</a>
+
+<style>
+
+    .thumbnail {
+        display: grid;
+        gap: var(--margin-small);
+        padding: var(--margin-small);
+        border: 1px solid var(--color-fg);
+        border-radius: var(--radius);
+        text-align: center;
+        text-decoration: none;
+        color: var(--color-teal);
+    }
+
+    .thumbnail:hover {
+        border-color: var(--color-links);
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius);
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+</style>

@@ -1,0 +1,6 @@
+---
+import { toHtml } from "@/functions/server/utils"
+const { provision } = Astro.props
+---
+
+<div class="card" set:html={toHtml(provision["Description"])} />

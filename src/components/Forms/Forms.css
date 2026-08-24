@@ -1,0 +1,64 @@
+/* Form Styles */
+
+form {
+    display: grid;
+    gap: var(--margin-small);
+    padding: var(--margin-medium);
+    border: var(--border) var(--color-ui-medium);
+    border-radius: var(--radius);
+    max-width: var(--block-width);
+    background-color: var(--color-ui-light);
+}
+
+input, select {
+    padding: var(--margin-x-small);
+    border: var(--border) var(--color-ui-medium);
+    border-radius: var(--radius);
+}
+
+label {
+    font-size: var(--font-size-form-label);
+    color: var(--color-fg);
+    text-transform: uppercase;
+}
+
+label .required-asterisk {
+    color: var(--color-error);
+}
+
+.form__inputs {
+    display: grid;
+    gap: var(--margin-small);
+    margin-bottom: var(--margin-small);
+}
+
+.form__input {
+   display: grid;
+   gap: var(--margin-x-small);
+}
+
+.form__input--required label {
+    color: var(--color-error);
+}
+
+/* Form States */
+.success {
+    color: var(--color-success);
+}
+
+.error {
+    color: var(--color-error);
+}
+
+/* Register specific styles */
+.btn-register {
+    margin-block: var(--margin-small);
+}
+
+.btn-register-feedback {
+    color: var(--color-link);
+    font-size: 1.2rem;
+    margin-block: var(--margin-medium);
+}
+
+/* Search form styles remain in global.css for use across the application */

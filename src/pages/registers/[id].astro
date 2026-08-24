@@ -1,0 +1,26 @@
+---
+import Master from '@/layouts/Master.astro'
+import { fetchCourseDays, fetchRegisters } from "@/functions/server/airtable/courses"
+import RegisterWrapper from '@/components/Registers/RegisterWrapper.astro'
+import Loader from '@/components/Elements/Loader/Loader.astro'
+
+const { id } = Astro.params
+
+if (!id) {
+    return Astro.redirect('/404')
+}
+
+const [days, registers] = await Promise.all([
+    fetchCourseDays(id),
+    fetchRegisters(id)
+])
+const title = days?.[0]?.["Course Title"] || "Oh dear!"
+---
+
+<Master title="Course Attendance">
+    <section class="grid page">
+        <RegisterWrapper courseId={id} title={title} days={days} registers={registers} server:defer>
+            <Loader label="Loading Register..."/>
+        </RegisterWrapper>
+    </section>
+</Master>

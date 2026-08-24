@@ -1,0 +1,28 @@
+---
+import Master from '@/layouts/Master.astro'
+import Button from '@/components/Elements/Buttons/Button.astro'
+---
+
+<Master title="Page not found">
+	<section>
+		<h1>Yikes!</h1>
+		<p class="block">The page you're looking for doesn't exist or has been moved. This could be because:</p>
+		<ul>
+			<li>The page has been moved to a new location</li>
+			<li>You need to be logged in with a valid account to access this page</li>
+			<li>The link you followed is incorrect or outdated</li>
+		</ul>
+		
+		<p>If you continue to have issues, please contact the TISUK team for assistance.</p>
+
+		<div>
+			<Button 
+				href="/" 
+				variant="primary" 
+				label="Go to Homepage"
+				type="button"
+			/>
+		</div>
+
+	</section>
+</Master>

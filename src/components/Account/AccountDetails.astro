@@ -1,0 +1,77 @@
+---
+import '@/components/Forms/Forms.css'
+import ButtonSignout from '@/components/Elements/Buttons/ButtonSignout'
+
+interface Props {
+  userData: any;
+  uid: string | undefined;
+}
+
+const { userData, uid } = Astro.props;
+---
+
+<div class="account-dashboard tile">
+  <div class="account__details">
+    <div class="form__input">
+      <label>Name</label>
+      <h3>{userData?.fullName}</h3>
+    </div>
+    {userData?.organization && (
+      <div class="form__input">
+        <label>Organisation</label>
+        <h3>{userData.organization}</h3>
+      </div>
+    )}
+    {userData?.role && (
+      <div class="form__input">
+        <label>Role</label>
+        <h3>{userData.role}</h3>
+      </div>
+    )}
+    <div class="form__input">
+      <label>Email</label>
+        <h3>{userData?.email}</h3>
+    </div>
+    <div class="form__input">
+      <label>Status</label>
+      <h3 class={userData?.isActive ? "success" : "error"}>
+        {userData?.isActive ? "Active" : "Inactive"}
+      </h3>
+    </div>
+    <div class="form__input">
+      <label>Account ID</label>
+      <h3 class="account-id">{uid}</h3>
+    </div>
+  </div>
+  
+  <ButtonSignout 
+    variant="primary"
+    style={{marginTop: 'var(--margin-medium)'}}
+    client:load
+  />
+</div>
+
+
+<style>
+
+    .account-dashboard {
+        display: grid;
+        max-width: var(--block-width);
+    }
+
+    .account__details {
+        display: grid;
+        grid-template-columns: minmax(250px, max-content) 1fr;
+        gap: var(--margin-small);
+    }
+
+    .account__detail {
+        display: grid;
+        gap: var(--margin-x-small);
+    }
+
+    .account-id {
+        opacity: var(--knockout-text);
+    }
+
+</style>

@@ -1,0 +1,149 @@
+---
+import { prettyDate, toStringArray, calculateCourseStatus } from '@/functions/server/utils';
+import type { CourseDetailsData } from '@/types/courses';
+
+const { courseDetails } = Astro.props as {
+  courseDetails: CourseDetailsData | null;
+};
+
+if (!courseDetails) {
+  throw new Error('CourseInfo requires courseDetails data');
+}
+
+const { application, scheduledCourse } = courseDetails;
+
+const ensureStringArray = (value: unknown): string[] => {
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => (item == null ? '' : String(item).trim()))
+      .filter(Boolean);
+  }
+
+  return toStringArray(value);
+};
+
+const title =
+  (scheduledCourse?.['Course Title'] as string | undefined) ??
+  (scheduledCourse?.['Course Name'] as string | undefined) ??
+  (application?.['Course Title'] as string | undefined) ??
+  'Course details';
+
+const name =
+  (scheduledCourse?.['Course Name'] as string | undefined) ??
+  (application?.['Course ID'] as string | undefined) ??
+  null;
+
+const qualification =
+  (scheduledCourse?.['Qualification'] as string | undefined) ??
+  (application?.['Qualification'] as string | undefined) ??
+  null;
+
+const dates = ensureStringArray(scheduledCourse?.['Dates'] ?? application?.['Dates']);
+const venues = ensureStringArray(scheduledCourse?.['Venues'] ?? application?.['Venues']);
+const trainers = ensureStringArray(scheduledCourse?.['Trainers'] ?? application?.['Trainers']);
+
+const startDate = dates.length > 0 ? dates[0] : (application?.['Start Date'] as string | undefined) ?? null;
+const endDate = (application?.['End Date'] as string | undefined) ?? null;
+const status = calculateCourseStatus(startDate, endDate);
+const grade = application?.['Grade'] as string | undefined;
+const certificateUrl = application?.['Certificate URL'] as string | undefined;
+const showGradeAttained = status === 'Completed' && grade && certificateUrl;
+
+---
+
+<section>
+
+  <div class="course-info-meta">
+    {name && (
+      <div class="course-info-meta-item">
+        <div class="meta-item-label">Name</div><div class="meta-item-value">{name}</div>
+      </div>
+    )}
+    {qualification && (
+      <div class="course-info-meta-item">
+        <div class="meta-item-label">Qualification</div><div class="meta-item-value">{qualification}</div>
+      </div>
+    )}
+    {dates.length > 0 && (
+      <div class="course-info-meta-item">
+        <div class="meta-item-label">Start Date</div><div class="meta-item-value">{prettyDate(dates[0])}</div>
+      </div>
+    )}
+    {venues.length > 0 && (
+      <div class="course-info-meta-item">
+        <div class="meta-item-label">Venues</div><div class="meta-item-value">{venues.join(', ')}</div>
+      </div>
+    )}
+    {trainers.length > 0 && (
+      <div class="course-info-meta-item">
+        <div class="meta-item-label">Trainers</div><div class="meta-item-value">{trainers.join(', ')}</div>
+      </div>
+    )}
+    <div class="course-info-meta-item">
+      <div class="meta-item-label">Status</div><div class="meta-item-value">{status}</div>
+    </div>
+    {showGradeAttained && (
+      <div class="course-info-meta-item">
+        <div class="meta-item-label">Grade Attained</div>
+        <div class="meta-item-value meta-item-value-with-icon">
+          <span>{grade}</span>
+          <a href={certificateUrl} target="_blank" rel="noopener noreferrer" class="certificate-link" aria-label="Download certificate">
+            <i class="icon fa-solid fa-file-pdf" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    )}
+  </div>
+
+</section>
+
+<style>
+
+  .course-info-meta {
+    display: grid;
+    max-width: var(--block-width);
+    text-wrap: pretty;
+  }
+
+  .course-info-meta-item {
+    display: grid;
+    gap: var(--margin-x-small);
+    padding-block: var(--margin-x-small);
+    border-bottom: var(--border) var(--color-knockout);
+  }
+
+  @media (min-width: 768px) {
+    .course-info-meta-item {
+      display: grid;
+      grid-template-columns: minmax(150px, max-content) auto;
+    }
+  }
+
+  .meta-item-label {
+    color: var(--font-color-label);
+    text-transform: var(--font-transform-label);
+    font-size: var(--font-size-label);
+  }
+
+  .meta-item-value-with-icon {
+    display: flex;
+    align-items: center;
+    gap: var(--margin-x-small);
+  }
+
+  .certificate-link {
+    color: var(--font-color-link);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .certificate-link:hover {
+    color: var(--font-color-link-hover);
+  }
+
+  .certificate-link .icon {
+    font-size: 1.2em;
+  }
+
+</style>

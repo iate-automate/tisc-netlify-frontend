@@ -1,0 +1,53 @@
+---
+import Master from '@/layouts/Master.astro'
+import Button from '@/components/Elements/Buttons/Button.astro'
+import PageHeader from '@/components/Elements/PageHeader/PageHeader.astro';
+import { getAuthData } from '@/functions/server/firebase/ssr';
+
+// Get auth data to show appropriate content
+const authData = await getAuthData(Astro.request);
+---
+
+
+<Master title="Portal">
+	<section class="home">
+		<div class="home-content">
+
+			<PageHeader
+			title={authData.isAuthenticated ? `Welcome back ${authData.userData?.firstName}!` : 'Welcome to the TISUK Practitioner Portal'}
+			copy="The TISUK practitioners online portal provides active TISUK practitioners with access to useful information, tools and resources that can support their work and training."
+			/>
+
+			{authData.isAuthenticated ? (
+				<div class="authenticated-welcome">
+					<Button 
+						href="/resources" 
+						variant="primary" 
+						label="Go to Resources"
+					/>
+				</div>
+			) : (
+				<div class="unauthenticated-welcome">
+				<Button
+					href="/account/activate"
+					variant="primary"
+					label="Activate Account or Sign in"
+					/>
+				</div>
+			)}
+		</div>
+		
+	</section>
+</Master>
+
+
+<style>
+	.home {
+		margin-block: auto;
+	}
+	.home-content {
+		display: grid;
+		gap: var(--margin-medium);
+	}
+
+</style>

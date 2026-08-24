@@ -1,0 +1,73 @@
+---
+import settings from '@/settings'
+import { fetchSystems, fetchBehaviours } from '@/functions/server/airtable/arte.ts'
+import Master from '@/layouts/Master.astro'
+import Breadcrumb from '@/components/Elements/Breadcrumb.astro'
+import CardBehaviour from '@/components/Resources/ARTE/CardBehaviour.astro'
+import ButtonBack from '@/components/Elements/Buttons/ButtonBack'
+
+const { id } = Astro.params
+const systems = await fetchSystems([id])
+const system = systems[0]
+const behaviours = await fetchBehaviours(system["Behaviours"])
+---
+
+<Master title={system["Name"]}>
+	<section class="section__resources">
+
+		<Breadcrumb
+			section={"Resources"}
+			sectionUrl={"/resources"}
+			title={settings.resources["ARTE"].title}
+			links={settings.resources["ARTE"].breadcrumb}
+		/>
+        
+         <!-- Header -->
+        <div class="header__resources">
+            <ButtonBack
+				label="< Back"
+				variant="alt"
+				style="link"
+				client:only="react"
+			/>
+            <h1>{system["Name"]}</h1>
+        </div>
+		
+        <div class="behaviours">
+            <h2>Behaviours</h2>
+            <div class="cards">
+                {behaviours.map(behaviour => (
+                    <CardBehaviour behaviour={behaviour} />
+                ))}
+            </div>
+        </div>
+
+        <!-- Back -->
+        <div>
+            <ButtonBack
+                label="Back"
+                variant="alt"
+                style="button"
+                client:only="react"
+            />
+        </div>
+
+	</section>
+</Master>
+
+<style>
+
+    .header__thumb {
+        display: grid;
+        grid-template-columns: max-content auto;
+        align-items: end;
+    }
+
+    .system-thumb {
+        width: 100px;
+        height: 100px;
+        border-radius: var(--radius);
+        margin-right: 1rem;
+    }
+
+</style>

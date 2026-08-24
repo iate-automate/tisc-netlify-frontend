@@ -1,0 +1,13 @@
+---
+import { fetchBehaviours } from '@/functions/server/airtable/arte'
+import CardBehaviour from "./CardBehaviour.astro"
+import type { AirtableBehaviour } from '@/types/index.js';
+
+const behaviours = await fetchBehaviours()
+---
+
+<div class="cards">
+    {behaviours.map((behaviour: AirtableBehaviour) => (
+        <CardBehaviour behaviour={behaviour}/>
+    ))}
+</div>

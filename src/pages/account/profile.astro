@@ -1,0 +1,30 @@
+---
+import Master from '@/layouts/Master.astro'
+import AccountDetails from '@/components/Account/AccountDetails.astro'
+import { getAuthData } from '@/functions/server/firebase/ssr';
+import PageHeader from '@/components/Elements/PageHeader/PageHeader.astro';
+
+// Get authentication data
+const authData = await getAuthData(Astro.request);
+
+// Redirect if not authenticated
+if (!authData.isAuthenticated) {
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: '/account/signin'
+    }
+  });
+}
+---
+
+<Master title="Profile">
+  <section>
+    <PageHeader title="Account Details" />
+    <AccountDetails 
+      userData={authData.userData} 
+      uid={authData.user?.uid} 
+    />
+  </section>
+</Master>
+

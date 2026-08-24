@@ -1,0 +1,9 @@
+---
+import './PageHeader.css'
+const { title, copy } = Astro.props
+---
+
+<div class="page-header">
+    <h1>{title}</h1>
+    {copy && <p>{copy}</p>}
+</div>

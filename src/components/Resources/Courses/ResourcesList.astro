@@ -1,0 +1,154 @@
+---
+import type { CourseDetailsData } from '@/types/courses';
+import { prettyDate } from '@/functions/server/utils';
+
+const { courseDetails = null } = Astro.props as { courseDetails?: CourseDetailsData | null };
+const resources = courseDetails?.resources ?? [];
+---
+
+<div class="course-resources">
+
+  <div class="course-resources-header">
+    <h2>Course Schedule & Materials</h2>
+    <p>Resources you can access at your current point in the course.</p>
+  </div>
+
+  {resources.length > 0 ? (
+    <div class="resource-list cards cards-wide">
+      {resources.map((entry) => (
+        <div class={`resource-item card ${entry.visible ? '' : 'locked'}`}>
+          <div class="resource-item-header">
+            {entry.dayNumber != null ? (
+              <div class="resource-item-day">
+                <span>Day {entry.dayNumber}</span>
+              </div>
+            ) : (
+              <div class="resource-item-day">
+                <span>General</span>
+              </div>
+            )}
+            {entry.courseDate != null && (
+              <div class="resource-item-date">
+                <span>{prettyDate(entry.courseDate)}</span>
+              </div>
+            )}
+          </div>
+          <div class="resource-item-content">
+            {/* Day-specific links (Zoom, Access Code, Feedback) - only for day entries, show even if locked */}
+            {entry.dayNumber != null && entry.dayLinks && (
+              <div class="resource-day-links">
+                {entry.dayLinks.zoomLink && (
+                  <a class="resource-item-element" href={entry.dayLinks.zoomLink} target="_blank" rel="noopener noreferrer">
+                    <div class="resource-item-element-icon">
+                      <i class="icon fa-solid fa-video" aria-hidden="true"></i>
+                    </div>
+                    <div>Zoom Link</div>
+                  </a>
+                )}
+                {entry.dayLinks.accessCode && (
+                  <div class="resource-item-element">
+                    <div class="resource-item-element-icon">
+                      <i class="icon fa-solid fa-key" aria-hidden="true"></i>
+                    </div>
+                    <div>{entry.dayLinks.accessCode}</div>
+                  </div>
+                )}
+                {entry.dayLinks.feedbackLink && (
+                  <a class="resource-item-element" href={entry.dayLinks.feedbackLink} target="_blank" rel="noopener noreferrer">
+                    <div class="resource-item-element-icon">
+                      <i class="icon fa-solid fa-clipboard-list" aria-hidden="true"></i>
+                    </div>
+                    <div>Feedback Form</div>
+                  </a>
+                )}
+              </div>
+            )}
+            {entry.visible ? (
+              <>
+                {/* Standard resources */}
+                {entry.items.length > 0 ? (
+                  <>
+                    {entry.dayNumber != null && entry.dayLinks && (entry.dayLinks.zoomLink || entry.dayLinks.accessCode || entry.dayLinks.feedbackLink) && (
+                      <div class="resource-day-links-separator"></div>
+                    )}
+                    {entry.items.map((resource) => (
+                      <a class="resource-item-element" href={resource.url} target="_blank" rel="noopener noreferrer">
+                        <div class="resource-item-element-icon">
+                          <i class={`icon ${(resource.icon ?? 'fa-solid fa-file')}`} aria-hidden="true"></i>
+                        </div>
+                        <div>{resource.name || 'View resource'}</div>
+                      </a>
+                    ))}
+                  </>
+                ) : (
+                  entry.dayNumber == null && <span>—</span>
+                )}
+              </>
+            ) : (
+              entry.dayNumber != null && <span><i class="icon fa-solid fa-lock" aria-hidden="true"></i></span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p class="resource-empty">
+      There doesn't appear to be any scheduled dates for this course yet.
+    </p>
+  )}
+</div>
+
+<style>
+
+  .course-resources {
+    display: grid;
+    gap: var(--margin-medium);
+  }
+
+  .resource-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--font-color-label);
+    padding-bottom: var(--margin-x-small);
+    border-bottom: var(--border) var(--color-knockout);
+  }
+
+  .resource-item-content {
+    display: grid;
+    gap: var(--margin-x-small);
+  }
+
+  .resource-day-links {
+    display: grid;
+    gap: var(--margin-x-small);
+  }
+
+  .resource-day-links-separator {
+    height: 1px;
+    background-color: var(--color-knockout);
+    margin: var(--margin-small) 0;
+  }
+
+  .resource-item-day {
+    font-weight: var(--font-weight-heading);
+  }
+
+  .resource-item-element {
+    display: grid;
+    grid-template-columns:24px 1fr;
+    gap: var(--margin-x-small);
+  }
+
+  .resource-item-element-icon {
+    display: grid;
+    place-items: center;
+  }
+
+  .resource-day-link-label {
+    font-weight: var(--font-weight-medium, 500);
+    margin-right: var(--margin-x-small);
+  }
+
+</style>
+

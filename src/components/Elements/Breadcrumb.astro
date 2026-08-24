@@ -1,0 +1,29 @@
+---
+const { section, sectionUrl, title, links } = Astro.props
+---
+
+<div class="breadcrumb">
+    {(title) && <div class="breadcrumb-title">
+        <a href={sectionUrl && sectionUrl}>{section && section}</a>
+         > {title}
+    </div>}
+    <div class="breadcrumb-nav">
+        {links.map((link: {url: string, label: string}) => {
+            return (
+                <a class="breadcrumb-link" href={link.url}>{link.label}</a>
+            )
+        })}
+    </div>
+</div>
+
+
+<style>
+
+    .breadcrumb-nav {
+        display: flex;
+        gap: var(--margin-small);
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+    
+</style>

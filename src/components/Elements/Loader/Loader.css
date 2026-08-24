@@ -1,0 +1,16 @@
+/* Loader Styles */
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--margin-small);
+}
+
+.loader-variant-block {
+    width: 100%;
+    border: var(--border) var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-ui-light);
+    padding: var(--margin-medium);
+}

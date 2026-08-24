@@ -1,0 +1,17 @@
+---
+import PageHeader from '@/components/Elements/PageHeader/PageHeader.astro'
+import Register from './Register'
+const { courseId, title, days, registers } = Astro.props
+---
+
+<PageHeader title={title} />
+
+    {days[0] ?
+        <div class="grid">
+            <Register client:load courseId={courseId} days={days} registers={registers} />
+        </div>
+        :
+    <div>
+        <p class="block">It looks like either there aren't any days scheduled for this course or the link is wrong. If you need any help please contact the TISUK team.</p>
+    </div>
+}

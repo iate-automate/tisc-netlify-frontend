@@ -1,0 +1,23 @@
+---
+import { fetchSystems } from "@/functions/server/airtable/arte"
+import Thumbnail from "@/components/Elements/Thumbnail.astro"
+
+const systems = await fetchSystems()
+---
+
+{systems[0] ?
+    <div class="cards">
+        {systems.map(system => (
+            <Thumbnail
+                title={system["Name"]}
+                link={`/resources/arte/systems/${system["Record ID"]}`}
+                img={system["Image URL"]}
+            />
+        ))}
+    </div>
+    :
+    <div>
+        <h2>Hmmm...</h2>
+        <p class="block">We couldn't find any Systems. Please refresh the page and try again. If the problem persists please <a href="https://www.traumainformedschools.co.uk/contact" target="_blank">contact the TISUK team</a>.</p>
+    </div>
+}

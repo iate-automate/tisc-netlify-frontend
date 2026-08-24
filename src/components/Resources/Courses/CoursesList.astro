@@ -1,0 +1,47 @@
+---
+import { prettyDate, sortBy } from '@/functions/server/utils'
+import type { ApplicationSummary } from '@/types/courses'
+
+const { applications = [] } = Astro.props as { applications?: ApplicationSummary[] }
+
+const confirmedCourses = sortBy(
+  applications.filter((application) => Boolean(application)),
+  'Start Date',
+  'asc',
+  (value) => (typeof value === 'string' && value ? new Date(value).getTime() : 0)
+)
+---
+
+<div class="resources-list cards">
+  {confirmedCourses.length > 0 ? (
+    confirmedCourses.map((course) => {
+      const title = course['Course Title'] ?? 'Course details'
+      const startDate = course['Start Date'] ? prettyDate(course['Start Date']) : null
+      const courseId = course['Course ID']
+      const applicationId = course.recordId
+
+      return (
+        <a class="resource card card-clickable" href={`/resources/courses/${applicationId}`}>
+            <h3>{title}</h3>
+            <div class="resource-meta">
+              {courseId && <div>{courseId}</div>}
+              {startDate && <div>{startDate}</div>}
+            </div>
+          </a>
+        )
+      })
+    ) : (
+      <div>
+        <h3>No confirmed courses yet</h3>
+        <p>Once your enrolment is confirmed, your course details will appear here.</p>
+      </div>
+    )}
+</div>
+
+<style>
+  .resource-meta-item {
+    display: grid;
+    grid-template-columns: minmax(100px, auto) 1fr;
+    font-size: var(--font-size-decreased);
+  }
+</style>

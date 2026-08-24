@@ -1,0 +1,22 @@
+{
+  "airtable": {
+    "apiUrl": "https://api.airtable.com/v0",
+    "baseMain": "appyRWiDNDiBpsoGC",
+    "basePortal": "appul4ZPEgDmU1uPs"
+  },
+  "firebase": {
+    "projectId": "tisuk-web",
+    "storageBucket": "gs://tisuk-web.appspot.com",
+    "clientId": "100206450854034654086",
+    "clientEmail": "firebase-adminsdk-h0rje@tisuk-web.iam.gserviceaccount.com",
+    "publicApiKey": "AIzaSyCwsHOHwoK541wJEv1xmTV2LKtskcl2ZhQ",
+    "functionsApiUrl": "https://us-central1-tisuk-web.cloudfunctions.net/api"
+  },
+  "site": {
+    "origin": "https://portal.traumainformedschools.co.uk"
+  },
+  "openai": {
+    "model": "gpt-4o",
+    "apiUrl": "https://api.openai.com/v1/chat/completions"
+  }
+}

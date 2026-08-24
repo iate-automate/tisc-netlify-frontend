@@ -1,0 +1,28 @@
+---
+import './Loader.css'
+
+interface Props {
+    label?: string;
+    variant?: 'naked' | 'block';
+    height?: string | number;
+    className?: string;
+}
+
+const { 
+    label = 'Loading...', 
+    variant = 'naked', 
+    height, 
+    className = ''
+} = Astro.props
+
+const baseClasses = 'loader';
+const variantClass = `loader-variant-${variant}`;
+const classes = `${baseClasses} ${variantClass} ${className}`.trim();
+
+const style = height ? `height: ${typeof height === 'number' ? `${height}px` : height};` : '';
+---
+
+<div class={classes} style={style}>
+    <i class="loader-spinner fa-solid fa-spinner"></i>
+    {label && <p class="loader-text">{label}</p>}
+</div>

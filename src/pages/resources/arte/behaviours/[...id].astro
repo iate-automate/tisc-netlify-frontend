@@ -1,0 +1,64 @@
+---
+import settings from '@/settings'
+import { fetchBehaviours, fetchPurposes, fetchProvisions } from '@/functions/server/airtable/arte'
+import Master from '@/layouts/Master.astro'
+import Breadcrumb from '@/components/Elements/Breadcrumb.astro'
+import ButtonBack from '@/components/Elements/Buttons/ButtonBack'
+import DetailBehaviour from '@/components/Resources/ARTE/DetailBehaviour.astro'
+import Loader from '@/components/Elements/Loader/Loader.astro'
+
+const { id } = Astro.params
+const behaviours = await fetchBehaviours([id || ''])
+const behaviour = behaviours[0]
+const purposes = await fetchPurposes(behaviour["Purpose"] || [])
+const provisions = await fetchProvisions(behaviour["Provision"] || [])
+
+// Get all related behaviours
+const allRelatedBehavioursIds = [...new Set(purposes.map(purpose => purpose["Behaviours"]).flat())]
+const relatedBehavioursIds = allRelatedBehavioursIds.filter(relatedBehaviourId => relatedBehaviourId !== behaviour["Record ID"])
+const relatedBehaviours = await fetchBehaviours(relatedBehavioursIds)
+---
+
+<Master title={behaviour["Name"]}>
+	<section class="section__resources">
+
+		<Breadcrumb
+			section={"Resources"}
+			sectionUrl={"/resources"}
+			title={settings.resources["ARTE"].title}
+			links={settings.resources["ARTE"].breadcrumb}
+		/>
+
+        <!-- Header -->
+        <div class="header__resources">
+            <ButtonBack
+				label="< Back"
+				variant="alt"
+				style="link"
+				client:only="react"
+			/>
+            <h1>{behaviour["Name"]}</h1>
+            <div class="type">{behaviour["Type"]}</div>
+        </div>
+
+       <DetailBehaviour
+            purposes={purposes}
+            provisions={provisions}
+            relatedBehaviours={relatedBehaviours}
+            server:defer
+        >
+            <Loader slot="fallback" label="Loading Behaviour Details..." variant="block" height="50vh"/>
+        </DetailBehaviour>
+
+        <!-- Back -->
+        <div>
+            <ButtonBack
+                label="Back"
+                variant="alt"
+                style="button"
+                client:only="react"
+            />
+        </div>
+
+	</section>
+</Master>

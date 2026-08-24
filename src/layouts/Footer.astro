@@ -1,0 +1,37 @@
+---
+import packageJson from '../../package.json';
+
+const year = new Date().getFullYear();
+const version = packageJson.version;
+---
+
+<footer>
+    <div class="small-print footer__credits">
+        <p>&copy; {year}. Trauma Informed Schools UK. </p>
+        <p>v{version}. Built by <a href="https://minnow.tech" target="_blank">Minnow</a>.</p>
+    </div>
+</footer>
+
+
+<style>
+
+    @media only screen and (min-width: 768px) {
+
+        .footer__credits {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--margin-medium);
+        }
+
+        .footer__credits p:last-child {
+            text-align: right;
+        }
+    }
+
+    @media print {
+        footer {
+            display: none;
+        }
+    }
+
+</style>

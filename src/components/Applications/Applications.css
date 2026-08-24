@@ -1,0 +1,105 @@
+.applications {
+    display: grid;
+    position: relative;
+    cursor: pointer;
+    max-width: var(--block-width);
+ }
+
+ .applications::after {
+     content: "";
+     display: block;
+     position: absolute;
+     bottom: 0;
+     height: var(--keyline);
+     background-color: var(--color-fg);
+     width: 100%;
+     opacity: var(--knockout);
+ }
+
+ .applications-icon-wrapper {
+    display: grid;
+ }
+
+.applications-icon {
+    margin-block: auto;
+    transition: transform 0.5s ease-out;
+    font-size: 1.2rem;
+}
+
+.applications-expanded .applications-summary{
+    grid-template-rows: 1fr;
+}
+
+.applications-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--margin-small);
+    padding-block: var(--margin-small);
+}
+
+.applications-header h3 {
+    display: grid;
+    grid-template-columns: max-content auto;
+    text-align: end;
+    margin: 0;
+    color: var(--color-link);
+}
+
+.applications-expanded .applications-icon {
+    transform: rotate(225deg);
+}
+
+.applications-summary {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s ease;
+}
+
+.applications-summary-content {
+    overflow: hidden;
+}
+
+.applications-summary-content > div:last-child {
+    padding-bottom: var(--margin-large);
+}
+
+.applications-summary-content h4 {
+    margin: var(--margin-medium) 0 0;
+}
+
+.applications-summary-content-info {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0 var(--margin-medium);
+    padding-top: var(--margin-small);
+}
+
+.applications-summary-content-responses,
+.applications-summary-content-trauma {
+    display: grid;
+    gap: var(--margin-x-small);
+    padding-top: var(--margin-small);
+}
+
+.applications-summary-content-trauma {
+    padding-top: 0;
+}
+
+.applications-summary-content li {
+    padding-bottom: var(--margin-x-small);
+}
+
+@media (min-width: 768px) {
+
+    .applications-header {
+        gap: var(--margin-medium);
+    }
+
+    .applications-summary-content > div {
+        padding-left: var(--margin-large);
+    }
+
+    .applications-summary-content li {
+        padding-bottom: var(--margin-small);
+    }
+}

@@ -1,0 +1,29 @@
+---
+import Master from '@/layouts/Master.astro'
+import { fetchApplications } from '@/functions/server/airtable/courses'
+import ApplicationsWrapper from '@/components/Applications/ApplicationsWrapper.astro'
+import Loader from '@/components/Elements/Loader/Loader.astro'
+
+const { id } = Astro.params
+const { searchParams } = Astro.url
+const mode = searchParams.get('mode') === "1"
+const applications = await fetchApplications(id || '', mode)
+
+---
+
+<Master title="Delegates">
+	<section class="page">
+        <ApplicationsWrapper applications={applications} server:defer>
+            <Loader label="Loading Applications..."/>
+        </ApplicationsWrapper>
+	</section>
+</Master>
+
+<style>
+
+    section {
+        display: grid;
+        gap: var(--margin-large);
+    }
+
+</style>

@@ -1,0 +1,82 @@
+/* -------------------------- Google Fonts are imported in the Master.astro file */
+
+/* -------------------------- Variables */
+
+:root {
+
+    /* Layouts */
+
+    --site-width: 1200px;;
+    --site-gutter-inline: min(6vw, 40px);
+    --site-gutter-block: min(6vw, 40px);
+
+    --margin-site: 2rem;
+    --margin-x-large: 6rem;
+    --margin-large: 3rem;
+    --margin-medium: 2rem;
+    --margin-small: 1rem;
+    --margin-x-small: 0.5rem;
+    --margin-xx-small: 0.25rem;
+
+    --line-width: 500px;
+    --block-width: 700px;
+    --page-width: 900px;
+
+    /* Colors */
+
+    --color-white: #ffffff;
+    --color-black: #15181d;
+    --color-grey-dark: #585858;
+    --color-grey-light: #f5f5f5;
+    --color-grey-medium: #808080;
+    --color-teal: #01a89e;
+    --color-red: #ff3f29;
+
+    --color-fg: var(--color-grey-dark);
+    --color-bg: var(--color-white);
+    --color-links: var(--color-teal);
+    --color-error: var(--color-red);
+    --color-success: var(--color-teal);
+    --color-knockout: #d6d6d6;
+
+    --color-ui-light: var(--color-grey-light);
+    --color-ui-medium: var(--color-grey-medium);
+    --color-ui-dark: var(--color-grey-dark);
+
+    /* Typography */
+
+    --font-family: 'Gabarito', sans-serif;
+    --font-size: 16px;
+    --font-size-mobile: 15px;
+    --font-size-increased: 1.1rem;
+    --font-size-decreased: 0.9rem;
+    --font-line-height: 1.5rem;
+    --font-weight: 400;
+
+    --font-family-heading: var(--font-family);
+    --font-line-height-heading: 1.2;
+    --font-letter-spacing-heading: -0.02em;
+    --font-weight-heading: 700;
+
+    --font-size-label: 0.7rem;
+    --font-transform-label: uppercase;
+    --font-color-label: var(--color-ui-medium);
+
+    --font-family-signature: 'Caveat', cursive;
+    --font-weight-signature: 500;
+    --font-line-height-signature: 1;
+    --font-letter-spacing-signature: 0;
+    --font-size-signature: 2rem;
+
+    /* Components */
+
+    --border: 1px solid;
+    --keyline: 1px;
+    --radius: 3px;
+    --knockout: 0.2;
+    --knockout-text: 0.6;
+
+    /* Forms */
+
+    --font-size-form-label: 0.7rem;
+}

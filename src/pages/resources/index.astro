@@ -1,0 +1,25 @@
+---
+import settings from '@/settings'
+import Master from '@/layouts/Master.astro'
+import PageHeader from '@/components/Elements/PageHeader/PageHeader.astro'
+---
+
+<Master title="Resources">
+	<section>
+
+		<PageHeader
+			title="Resources"
+			copy="The TISUK portal will provide a range of resources to support the work of TISUK practitioners."
+		/>
+		<div class="resources-list cards">
+			{Object.entries(settings.resources)
+				.filter(([key, value]) => value.live)
+				.map(([key, value], index) => (
+				<a class="resource-item card card-clickable" href={value.url}>
+					<h2>{value.title}</h2>
+				</a>
+			))}
+		</div>
+		
+	</section>
+</Master>

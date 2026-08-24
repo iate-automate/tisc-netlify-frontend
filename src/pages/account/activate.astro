@@ -1,0 +1,29 @@
+---
+import Master from '@/layouts/Master.astro'
+import FormActivate from '@/components/Forms/FormActivate'
+import PageHeader from '@/components/Elements/PageHeader/PageHeader.astro';
+import { getAuthData } from '@/functions/server/firebase/ssr';
+
+// Get authentication data
+const authData = await getAuthData(Astro.request);
+
+// Redirect if already authenticated
+if (authData.isAuthenticated) {
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: '/account/profile'
+    }
+  });
+}
+---
+
+<Master title="Activate Account">
+  <section>
+    <PageHeader 
+      title="Activate Account" 
+      copy="Please provide the following details to activate your account." 
+    />
+    <FormActivate client:only="react" />
+  </section>
+</Master>

@@ -1,0 +1,55 @@
+@import "@/components/Forms/Forms.css";
+
+/* Search Behaviours CSS */
+
+.search {
+    display: grid;
+    gap: var(--margin-medium);
+}
+
+.bar__search {
+    display: grid;
+    gap: var(--margin-x-small);
+    max-width: var(--line-width);
+}
+
+@media only screen and (min-width: 768px) {
+    .bar__search {
+        grid-template-columns: auto 20%;
+    }
+}
+
+.input__search,
+.btn__search {
+    padding: var(--margin-small);
+    box-sizing: border-box;
+    font-size: 1.2em;
+}
+
+.input__search {
+    color: var(--color-grey);
+    font-weight: bold;
+    background-color: var(--color-grey-tint);
+}
+
+.btn__search {
+    min-width: 170px;
+}
+
+.search-results {
+    display: grid;
+    gap: var(--margin-small);
+}
+
+.search-result {
+    color: inherit;
+}
+
+.search-loading,
+.loading {
+    color: var(--color-links);
+}
+
+.results-count {
+    font-style: italic;
+}

@@ -1,0 +1,85 @@
+---
+import Master from '@/layouts/Master.astro';
+import CourseInfo from '@/components/Resources/Courses/CourseInfo.astro';
+import ResourcesList from '@/components/Resources/Courses/ResourcesList.astro';
+import PageHeader from '@/components/Elements/PageHeader/PageHeader.astro';
+import ButtonBack from '@/components/Elements/Buttons/ButtonBack';
+
+import { getAuthData } from '@/functions/server/firebase/ssr';
+import { fetchFullCourseDetails } from '@/functions/server/airtable/applications';
+
+import type { CourseDetailsData } from '@/types/courses';
+
+const authData = await getAuthData(Astro.request);
+const { id } = Astro.params;
+
+const userApplicationIds = authData.userData?.applications ?? [];
+const isLegit = !!id && userApplicationIds.includes(id as string);
+
+let courseTitle = 'Course';
+let courseDetails: CourseDetailsData | null = null;
+
+if (isLegit) {
+  courseDetails = await fetchFullCourseDetails(id as string);
+  courseTitle = courseDetails?.application?.['Course Title'] ?? courseDetails?.scheduledCourse?.['Course Title'] ?? 'Course';
+}
+
+---
+
+<Master title={courseTitle}>
+  <section class="course-detail">
+
+    <ButtonBack
+      label="< Back to Courses"
+      href="/resources/courses"
+      style="breadcrumb"
+      client:only="react"
+    />
+
+    <PageHeader title={courseTitle} />
+    {isLegit && courseDetails ? (
+      <>
+        <CourseInfo courseDetails={courseDetails} />
+        <ResourcesList courseDetails={courseDetails} />
+      </>
+    ) : (
+      <div class="course-access-warning card">
+        <h1>Course Locked</h1>
+        <p>
+          It looks like you don't have a confirmed enrolment for this course.
+          Please contact the TISUK team if you think this is an error.
+        </p>
+      </div>
+    )}
+
+    <!-- Back -->
+    <div>
+      <ButtonBack
+        label="Back to Courses"
+        href="/resources/courses"
+        variant="alt"
+        style="button"
+        client:only="react"
+      />
+    </div>
+  </section>
+</Master>
+
+<style>
+  .course-detail {
+    display: grid;
+    gap: var(--margin-large);
+  }
+
+  .course-access-warning {
+    display: grid;
+    gap: var(--margin-small);
+    padding: var(--margin-large);
+    text-align: center;
+  }
+
+  .course-access-warning p {
+    margin: 0;
+  }
+</style>
+

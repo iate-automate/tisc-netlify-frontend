@@ -1,0 +1,25 @@
+---
+import './Button.css'
+const {label, variant, href,disabled = false, ...rest} = Astro.props
+const randomID = Math.random().toString(36).substring(7)
+---
+
+{href ? (
+    <a
+        href={href}
+        class={`btn btn-${variant}`}
+        id={`btn-${randomID}`}
+        {...rest}
+    >
+        {label}
+    </a>
+    ) : (
+    <button
+        class={`btn btn-${variant}`}
+        id={`btn-${randomID}`}
+        disabled={disabled}
+        {...rest}
+    >
+        {label}
+    </button>
+)}

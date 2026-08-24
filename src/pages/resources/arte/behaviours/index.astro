@@ -1,0 +1,47 @@
+---
+import settings from '@/settings'
+import Master from '@/layouts/Master.astro'
+import Breadcrumb from '@/components/Elements/Breadcrumb.astro'
+import ButtonBack from '@/components/Elements/Buttons/ButtonBack'
+import GalleryBehaviours from '@/components/Resources/ARTE/GalleryBehaviours.astro'
+import Loader from '@/components/Elements/Loader/Loader.astro'
+
+---
+
+<Master title="Behaviours">
+	<section class="section__resources">
+
+		<Breadcrumb
+			section={"Resources"}
+			sectionUrl={"/resources"}
+			title={settings.resources["ARTE"].title}
+			links={settings.resources["ARTE"].breadcrumb}
+		/>
+
+		 <!-- Header -->
+		<div class="header__resources">
+			<ButtonBack
+				label="< Back"
+				variant="alt"
+				style="link"
+				client:only="react"
+			/>
+			<h1>Behaviours</h1>
+		</div>
+		
+		<GalleryBehaviours server:defer >
+			<Loader slot="fallback" label="Loading Behaviours..."/>
+		</GalleryBehaviours>
+
+		<!-- Back -->
+		<div>
+		<ButtonBack
+			label="Back"
+			variant="alt"
+			style="button"
+			client:only="react"
+		/>
+        </div>
+
+	</section>
+</Master>

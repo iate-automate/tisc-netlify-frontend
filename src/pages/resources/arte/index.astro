@@ -1,0 +1,41 @@
+---
+import settings from '@/settings'
+import Master from '@/layouts/Master.astro'
+import PageHeader from '@/components/Elements/PageHeader/PageHeader.astro'
+import Breadcrumb from '@/components/Elements/Breadcrumb.astro'
+import SearchBehaviours from '@/components/Resources/ARTE/SearchBehaviours/SearchBehaviours'
+---
+
+<Master title="ARTE">
+	<section class="home-arte">
+
+		<Breadcrumb
+			section={"Resources"}
+			sectionUrl={"/resources"}
+			title={settings.resources["ARTE"].title}
+			links={settings.resources["ARTE"].breadcrumb}
+		/>
+
+		<div class="home-arte-content">
+			<PageHeader
+				title={settings.resources["ARTE"].title}
+				copy="This resource is designed to make it easy to search behaviours and see their related purposes and provisions. "
+			/>
+			<p class="small-print">Developed for TISUK by Julie Harmieson, Suzie Franklin & Julia Bird.</p>
+		</div>
+
+
+		 <!-- Search -->
+		<div class="search">
+			<SearchBehaviours client:only="react">
+		</div>
+
+	</section>
+</Master>
+
+<style>
+	.small-print {
+		margin-top: var(--margin-small);
+	}
+
+</style>
