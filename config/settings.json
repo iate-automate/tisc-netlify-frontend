@@ -10,8 +10,7 @@
     "storageBucket": "gs://tisc-functions.firebasestorage.app",
     "messagingSenderId": "765640180911",
     "appId": "1:765640180911:web:8989570a6003169b48005a",
-    "clientId": "TODO_SET_AFTER_SERVICE_ACCOUNT_KEY_GENERATED",
-    "clientEmail": "TODO_SET_AFTER_SERVICE_ACCOUNT_KEY_GENERATED",
+    "clientEmail": "firebase-adminsdk-fbsvc@tisc-functions.iam.gserviceaccount.com",
     "publicApiKey": "AIzaSyClLGr65JrwyfS5hu1c_YWC53cmLdrieFc",
     "functionsApiUrl": "https://us-central1-tisc-functions.cloudfunctions.net/api"
   },
