@@ -12,7 +12,7 @@
     "appId": "1:765640180911:web:8989570a6003169b48005a",
     "clientEmail": "firebase-adminsdk-fbsvc@tisc-functions.iam.gserviceaccount.com",
     "publicApiKey": "AIzaSyClLGr65JrwyfS5hu1c_YWC53cmLdrieFc",
-    "functionsApiUrl": "https://us-central1-tisc-functions.cloudfunctions.net/api"
+    "functionsApiUrl": "https://europe-west2-tisc-functions.cloudfunctions.net/api"
   },
   "site": {
     "origin": "https://portal.traumainformedschools.co.uk"
