@@ -74,12 +74,9 @@ export async function verifySessionCookie(sessionCookie: string): Promise<{ user
       userData: userData.success && userData.data ? userData.data : null
     };
   } catch (error: any) {
-    // For expired/invalid session cookies, return null instead of throwing errors
-    // This is expected behavior for unauthenticated users
-    if (error.code === 'auth/session-cookie-expired' || 
-        error.code === 'auth/session-cookie-revoked' || 
-        error.code === 'auth/invalid-session-cookie') {
-      logger.info('No valid session cookie found. User logged out.');
+    // Any rejected cookie means logged out, incl. auth/argument-error from another project's (pre-migration) cookie
+    if (typeof error.code === 'string' && error.code.startsWith('auth/')) {
+      logger.info('No valid session cookie found. User logged out.', { code: error.code });
       return { user: null, userData: null };
     }
     
