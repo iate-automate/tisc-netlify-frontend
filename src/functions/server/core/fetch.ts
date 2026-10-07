@@ -34,8 +34,20 @@ export async function enhancedFetch<T = any>(
       clearTimeout(timeoutId);
       
       if (!response.ok) {
+        // Keep the response body: APIs put the actual reason there (Airtable
+        // returns error.type, e.g. INVALID_PERMISSIONS_OR_MODEL_NOT_FOUND),
+        // and a bare status code can't distinguish a scope problem from a
+        // field-permission one.
+        let detail = '';
+        try {
+          const body = (await response.text()).trim();
+          if (body) detail = ` — ${body.slice(0, 500)}`;
+        } catch {
+          // Body unreadable; the status will have to do.
+        }
+
         throw new AppError(
-          `HTTP ${response.status}: ${response.statusText}`,
+          `HTTP ${response.status}: ${response.statusText}${detail}`,
           response.status
         );
       }
