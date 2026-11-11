@@ -2,7 +2,8 @@ import { defineMiddleware } from 'astro:middleware';
 import { requireActiveUser } from '@/functions/server/firebase/route-protection';
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  const { pathname } = context.url;
+  const { pathname, search } = context.url;
+  const returnTo = encodeURIComponent(pathname + search);
   
   // Define private routes that require authentication
   const privateRoutes = [
@@ -21,8 +22,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
       const protection = await requireActiveUser(context.request);
       
       if (!protection.allowed) {
-        // Redirect to signin with the original path as a parameter
-        const redirectUrl = `/account/signin?redirect=${encodeURIComponent(pathname)}`;
+        const redirectUrl = `/account/signin?redirect=${returnTo}`;
         return new Response(null, {
           status: 302,
           headers: {
@@ -35,7 +35,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
       }
     } catch (error) {
       // If there's an error, redirect to signin
-      const redirectUrl = `/account/signin?redirect=${encodeURIComponent(pathname)}`;
+      const redirectUrl = `/account/signin?redirect=${returnTo}`;
       return new Response(null, {
         status: 302,
         headers: {
