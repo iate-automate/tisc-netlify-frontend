@@ -41,6 +41,9 @@ export async function getUserByRecordId(recordId: string): Promise<ApiResponse<U
       };
     }
 
+    const trainerLink = record.fields["Trainer"];
+    const trainerRecordId = Array.isArray(trainerLink) ? trainerLink[0] : undefined;
+
     const userData: UserData = {
       id: record.id,
       uid: record.fields["Portal ID"],
@@ -58,6 +61,8 @@ export async function getUserByRecordId(recordId: string): Promise<ApiResponse<U
       createdAt: record.createdTime || '',
       updatedAt: record.fields["Last Modified"] || '',
       isActive: record.fields["Portal"] === "Active",
+      isPortalAdmin: record.fields["Portal Admin"] === true,
+      trainerRecordId,
       activationKey: record.fields["Portal Activation Key"] || '',
       applications: record.fields["Applications"] || [],
       recordId: record.id
@@ -118,6 +123,9 @@ export async function getUserByUid(uid: string): Promise<ApiResponse<UserData>> 
       };
     }
 
+    const trainerLink = userRecord.fields["Trainer"];
+    const trainerRecordId = Array.isArray(trainerLink) ? trainerLink[0] : undefined;
+
     const userData: UserData = {
       id: userRecord.id,
       uid: userRecord.fields["Portal ID"],
@@ -135,6 +143,8 @@ export async function getUserByUid(uid: string): Promise<ApiResponse<UserData>> 
       createdAt: userRecord.fields["Created At"],
       updatedAt: userRecord.fields["Updated At"],
       isActive: userRecord.fields["Portal"] === "Active",
+      isPortalAdmin: userRecord.fields["Portal Admin"] === true,
+      trainerRecordId,
       activationKey: userRecord.fields["Activation Key"],
       recordId: userRecord.id
     };

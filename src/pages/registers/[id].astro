@@ -1,13 +1,19 @@
 ---
 import Master from '@/layouts/Master.astro'
 import { fetchCourseDays, fetchRegisters } from "@/functions/server/airtable/courses"
+import { assertCourseAccess } from '@/functions/server/firebase/course-access'
 import RegisterWrapper from '@/components/Registers/RegisterWrapper.astro'
 import Loader from '@/components/Elements/Loader/Loader.astro'
 
 const { id } = Astro.params
 
 if (!id) {
-    return Astro.redirect('/404')
+    return Astro.redirect('/registers')
+}
+
+const access = await assertCourseAccess(Astro.locals.auth, id, '/registers')
+if (!access.allowed) {
+    return Astro.redirect(access.redirect || '/registers')
 }
 
 const [days, registers] = await Promise.all([

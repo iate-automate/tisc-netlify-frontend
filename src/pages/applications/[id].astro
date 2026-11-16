@@ -1,13 +1,24 @@
 ---
 import Master from '@/layouts/Master.astro'
 import { fetchApplications } from '@/functions/server/airtable/courses'
+import { assertCourseAccess } from '@/functions/server/firebase/course-access'
 import ApplicationsWrapper from '@/components/Applications/ApplicationsWrapper.astro'
 import Loader from '@/components/Elements/Loader/Loader.astro'
 
 const { id } = Astro.params
 const { searchParams } = Astro.url
+
+if (!id) {
+	return Astro.redirect('/applications')
+}
+
+const access = await assertCourseAccess(Astro.locals.auth, id, '/applications')
+if (!access.allowed) {
+	return Astro.redirect(access.redirect || '/applications')
+}
+
 const mode = searchParams.get('mode') === "1"
-const applications = await fetchApplications(id || '', mode)
+const applications = await fetchApplications(id, mode)
 
 ---
 

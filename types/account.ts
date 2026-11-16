@@ -25,6 +25,10 @@ export interface UserData {
   createdAt: string;
   updatedAt: string;
   isActive: boolean;
+  /** True when People."Portal Admin" is checked in Airtable */
+  isPortalAdmin: boolean;
+  /** Linked Trainers record from People.Trainer, if present */
+  trainerRecordId?: string;
   activationKey?: string;
   applications?: string[];
   recordId?: string; // Airtable record ID
