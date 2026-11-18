@@ -76,6 +76,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
           }
         });
       }
+
+      // Keep the signed-in user on the request so course pages can reuse it
+      context.locals.auth = protection.authData;
     } catch (error) {
       // If there's an error, redirect to signin
       const redirectUrl = `/account/signin?redirect=${returnTo}`;
